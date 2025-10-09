@@ -1,140 +1,94 @@
-# HELP jvm_threads_current Current thread count of a JVM
-# TYPE jvm_threads_current gauge
-jvm_threads_current 19.0
-# HELP jvm_threads_daemon Daemon thread count of a JVM
-# TYPE jvm_threads_daemon gauge
-jvm_threads_daemon 17.0
-# HELP jvm_threads_peak Peak thread count of a JVM
-# TYPE jvm_threads_peak gauge
-jvm_threads_peak 19.0
-# HELP jvm_threads_started_total Started thread count of a JVM
-# TYPE jvm_threads_started_total counter
-jvm_threads_started_total 27.0
-# HELP jvm_threads_deadlocked Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers
-# TYPE jvm_threads_deadlocked gauge
-jvm_threads_deadlocked 0.0
-# HELP jvm_threads_deadlocked_monitor Cycles of JVM-threads that are in deadlock waiting to acquire object monitors
-# TYPE jvm_threads_deadlocked_monitor gauge
-jvm_threads_deadlocked_monitor 0.0
-# HELP jvm_threads_state Current count of threads by state
-# TYPE jvm_threads_state gauge
-jvm_threads_state{state="NEW",} 0.0
-jvm_threads_state{state="TERMINATED",} 0.0
-jvm_threads_state{state="RUNNABLE",} 11.0
-jvm_threads_state{state="BLOCKED",} 0.0
-jvm_threads_state{state="WAITING",} 2.0
-jvm_threads_state{state="TIMED_WAITING",} 6.0
-jvm_threads_state{state="UNKNOWN",} 0.0
-# HELP mc_server_tick_seconds Stats on server tick times.
-# TYPE mc_server_tick_seconds histogram
-mc_server_tick_seconds_bucket{le="0.01",} 891.0
-mc_server_tick_seconds_bucket{le="0.025",} 897.0
-mc_server_tick_seconds_bucket{le="0.05",} 898.0
-mc_server_tick_seconds_bucket{le="0.1",} 899.0
-mc_server_tick_seconds_bucket{le="0.25",} 899.0
-mc_server_tick_seconds_bucket{le="0.5",} 899.0
-mc_server_tick_seconds_bucket{le="1.0",} 899.0
-mc_server_tick_seconds_bucket{le="+Inf",} 899.0
-mc_server_tick_seconds_count 899.0
-mc_server_tick_seconds_sum 1.4842826630000012
-# HELP mc_dimension_tick_seconds Stats on dimension tick times.
-# TYPE mc_dimension_tick_seconds histogram
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.01",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.025",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.05",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.1",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.25",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.5",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="1.0",} 900.0
-mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="+Inf",} 900.0
-mc_dimension_tick_seconds_count{id="-1",name="Nether",} 900.0
-mc_dimension_tick_seconds_sum{id="-1",name="Nether",} 0.02578330799999995
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.01",} 896.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.025",} 899.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.05",} 900.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.1",} 900.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.25",} 900.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.5",} 900.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="1.0",} 900.0
-mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="+Inf",} 900.0
-mc_dimension_tick_seconds_count{id="0",name="Overworld",} 900.0
-mc_dimension_tick_seconds_sum{id="0",name="Overworld",} 1.2421714939999997
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.01",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.025",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.05",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.1",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.25",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.5",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="1.0",} 900.0
-mc_dimension_tick_seconds_bucket{id="1",name="The End",le="+Inf",} 900.0
-mc_dimension_tick_seconds_count{id="1",name="The End",} 900.0
-mc_dimension_tick_seconds_sum{id="1",name="The End",} 0.087748228
-# HELP mc_teams_chunk_claims Number of chunk claims per team per dim.
-# TYPE mc_teams_chunk_claims gauge
-mc_teams_chunk_claims{team_id="developer_team",team_name="Developer's Team",team_type="player",dim_id="1",dim_name="The End",} 14.0
-mc_teams_chunk_claims{team_id="developer_team",team_name="Developer's Team",team_type="player",dim_id="0",dim_name="Overworld",} 3.0
-# HELP mc_teams_chunk_loads Number of chunks being force loaded per team per dim.
-# TYPE mc_teams_chunk_loads gauge
-mc_teams_chunk_loads{team_id="developer_team",team_name="Developer's Team",team_type="player",dim_id="1",dim_name="The End",} 1.0
-mc_teams_chunk_loads{team_id="developer_team",team_name="Developer's Team",team_type="player",dim_id="0",dim_name="Overworld",} 2.0
-# HELP mc_teams_players Players in a team
-# TYPE mc_teams_players gauge
-mc_teams_players{team_id="developer_team",team_name="Developer's Team",player_uuid="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 1.0
-# HELP mc_server_ticks_total_counter DIM0's total ticks
-# TYPE mc_server_ticks_total_counter gauge
-mc_server_ticks_total_counter 27545.0
+# HELP jvm_buffer_pool_used_bytes Used bytes of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_used_bytes gauge
+jvm_buffer_pool_used_bytes{pool="mapped",} 0.0
+jvm_buffer_pool_used_bytes{pool="direct",} 44019.0
+jvm_buffer_pool_used_bytes{pool="mapped - 'non-volatile memory'",} 0.0
+# HELP jvm_buffer_pool_capacity_bytes Bytes capacity of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_capacity_bytes gauge
+jvm_buffer_pool_capacity_bytes{pool="mapped",} 0.0
+jvm_buffer_pool_capacity_bytes{pool="direct",} 44018.0
+jvm_buffer_pool_capacity_bytes{pool="mapped - 'non-volatile memory'",} 0.0
+# HELP jvm_buffer_pool_used_buffers Used buffers of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_used_buffers gauge
+jvm_buffer_pool_used_buffers{pool="mapped",} 0.0
+jvm_buffer_pool_used_buffers{pool="direct",} 5.0
+jvm_buffer_pool_used_buffers{pool="mapped - 'non-volatile memory'",} 0.0
 # HELP mc_entities_total The number of entities in each dimension by type.
 # TYPE mc_entities_total gauge
-mc_entities_total{dim="The End",dim_id="1",id="58",type="Enderman",} 85.0
-mc_entities_total{dim="Overworld",dim_id="0",id="100",type="EntityHorse",} 13.0
-mc_entities_total{dim="Overworld",dim_id="0",id="52",type="Spider",} 6.0
-mc_entities_total{dim="Overworld",dim_id="0",id="93",type="Chicken",} 72.0
-mc_entities_total{dim="Overworld",dim_id="0",id="43",type="MinecartChest",} 3.0
-mc_entities_total{dim="Overworld",dim_id="0",id="1",type="Item",} 5.0
-mc_entities_total{dim="The End",dim_id="1",id="63",type="EnderDragon",} 1.0
-mc_entities_total{dim="Overworld",dim_id="0",id="51",type="Skeleton",} 28.0
+mc_entities_total{dim="Overworld",dim_id="0",id="90",type="Pig",} 22.0
+mc_entities_total{dim="Overworld",dim_id="0",id="100",type="EntityHorse",} 24.0
+mc_entities_total{dim="Overworld",dim_id="0",id="52",type="Spider",} 3.0
+mc_entities_total{dim="Overworld",dim_id="0",id="65",type="Bat",} 17.0
+mc_entities_total{dim="Overworld",dim_id="0",id="91",type="Sheep",} 12.0
+mc_entities_total{dim="Overworld",dim_id="0",id="51",type="Skeleton",} 35.0
 mc_entities_total{dim="Overworld",dim_id="0",id="58",type="Enderman",} 2.0
-mc_entities_total{dim="The End",dim_id="1",id="200",type="EnderCrystal",} 10.0
-mc_entities_total{dim="Overworld",dim_id="0",id="66",type="Witch",} 6.0
-mc_entities_total{dim="Overworld",dim_id="0",id="65",type="Bat",} 16.0
-mc_entities_total{dim="Overworld",dim_id="0",id="54",type="Zombie",} 21.0
-mc_entities_total{dim="Overworld",dim_id="0",id="94",type="Squid",} 10.0
-mc_entities_total{dim="Overworld",dim_id="0",id="50",type="Creeper",} 17.0
-mc_entities_total{dim="Overworld",dim_id="0",id="90",type="Pig",} 85.0
-mc_entities_total{dim="Overworld",dim_id="0",id="91",type="Sheep",} 80.0
-mc_entities_total{dim="Overworld",dim_id="0",id="92",type="Cow",} 7.0
-# HELP jvm_gc_collection_seconds Time spent in a given JVM garbage collector in seconds.
-# TYPE jvm_gc_collection_seconds summary
-jvm_gc_collection_seconds_count{gc="G1 Young Generation",} 9.0
-jvm_gc_collection_seconds_sum{gc="G1 Young Generation",} 0.051
-jvm_gc_collection_seconds_count{gc="G1 Concurrent GC",} 4.0
-jvm_gc_collection_seconds_sum{gc="G1 Concurrent GC",} 0.002
-jvm_gc_collection_seconds_count{gc="G1 Old Generation",} 1.0
-jvm_gc_collection_seconds_sum{gc="G1 Old Generation",} 0.009
-# HELP jvm_info VM version info
-# TYPE jvm_info gauge
-jvm_info{runtime="OpenJDK Runtime Environment",vendor="JetBrains s.r.o.",version="21.0.5+8-b750.29",} 1.0
+mc_entities_total{dim="Overworld",dim_id="0",id="1",type="Item",} 48.0
+mc_entities_total{dim="Overworld",dim_id="0",id="120",type="Villager",} 18.0
+mc_entities_total{dim="Overworld",dim_id="0",id="54",type="Zombie",} 18.0
+mc_entities_total{dim="Overworld",dim_id="0",id="94",type="Squid",} 14.0
+mc_entities_total{dim="Overworld",dim_id="0",id="50",type="Creeper",} 21.0
+mc_entities_total{dim="Overworld",dim_id="0",id="66",type="Witch",} 1.0
+mc_entities_total{dim="Overworld",dim_id="0",id="43",type="MinecartChest",} 2.0
+mc_entities_total{dim="Overworld",dim_id="0",id="92",type="Cow",} 126.0
+# HELP mc_player_list The players connected to the server
+# TYPE mc_player_list gauge
+mc_player_list{id="a01a21f5-c117-3c1f-b5d0-e055b927f733",name="Developer",dim="Overworld",dim_id="0",} 1.0
+# HELP mc_teams_chunk_claims Number of chunk claims per team per dim.
+# TYPE mc_teams_chunk_claims gauge
+# HELP mc_teams_chunk_loads Number of chunks being force loaded per team per dim.
+# TYPE mc_teams_chunk_loads gauge
+# HELP mc_teams_players Players in a team
+# TYPE mc_teams_players gauge
 # HELP jvm_memory_pool_allocated_bytes_total Total bytes allocated in a given JVM memory pool. Only updated after GC, not continuously.
 # TYPE jvm_memory_pool_allocated_bytes_total counter
-jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'profiled nmethods'",} 2.0670464E7
-jvm_memory_pool_allocated_bytes_total{pool="G1 Old Gen",} 5.8261288E7
-jvm_memory_pool_allocated_bytes_total{pool="G1 Eden Space",} 6.01882624E8
-jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-profiled nmethods'",} 1.1767936E7
-jvm_memory_pool_allocated_bytes_total{pool="G1 Survivor Space",} 8.1788928E7
-jvm_memory_pool_allocated_bytes_total{pool="Compressed Class Space",} 5891944.0
-jvm_memory_pool_allocated_bytes_total{pool="Metaspace",} 4.869408E7
-jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-nmethods'",} 2321280.0
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'profiled nmethods'",} 2.4935936E7
+jvm_memory_pool_allocated_bytes_total{pool="G1 Old Gen",} 1.0395748E8
+jvm_memory_pool_allocated_bytes_total{pool="G1 Eden Space",} 6.03979776E8
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-profiled nmethods'",} 1.4207616E7
+jvm_memory_pool_allocated_bytes_total{pool="G1 Survivor Space",} 7.1820896E7
+jvm_memory_pool_allocated_bytes_total{pool="Compressed Class Space",} 6640616.0
+jvm_memory_pool_allocated_bytes_total{pool="Metaspace",} 5.5477576E7
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-nmethods'",} 2048000.0
+# HELP mc_player_stat_total The general stats about players.
+# TYPE mc_player_stat_total gauge
+mc_player_stat_total{code="stat.leaveGame",name="Games quit",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 1.0
+mc_player_stat_total{code="stat.playOneMinute",name="Minutes Played",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 2732.0
+mc_player_stat_total{code="stat.walkOneCm",name="Distance Walked",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 982.0
+mc_player_stat_total{code="stat.swimOneCm",name="Distance Swum",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 203.0
+mc_player_stat_total{code="stat.fallOneCm",name="Distance Fallen",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 211.0
+mc_player_stat_total{code="stat.climbOneCm",name="Distance Climbed",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.flyOneCm",name="Distance Flown",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.diveOneCm",name="Distance Dove",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 582.0
+mc_player_stat_total{code="stat.minecartOneCm",name="Distance by Minecart",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.boatOneCm",name="Distance by Boat",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.pigOneCm",name="Distance by Pig",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.horseOneCm",name="Distance by Horse",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.jump",name="Jumps",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 11.0
+mc_player_stat_total{code="stat.drop",name="Items Dropped",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.damageDealt",name="Damage Dealt",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.damageTaken",name="Damage Taken",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.deaths",name="Number of Deaths",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.mobKills",name="Mob Kills",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.animalsBred",name="Animals Bred",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.playerKills",name="Player Kills",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.fishCaught",name="Fish Caught",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.junkFished",name="Junk Fished",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="stat.treasureFished",name="Treasure Fished",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+mc_player_stat_total{code="serverutilities.stat.time_afk",name="Time AFK",player_id="a01a21f5-c117-3c1f-b5d0-e055b927f733",player_name="Developer",} 0.0
+# HELP jvm_info VM version info
+# TYPE jvm_info gauge
+jvm_info{runtime="OpenJDK Runtime Environment",vendor="JetBrains s.r.o.",version="21.0.7+9-b895.130",} 1.0
 # HELP jvm_memory_objects_pending_finalization The number of objects waiting in the finalizer queue.
 # TYPE jvm_memory_objects_pending_finalization gauge
 jvm_memory_objects_pending_finalization 0.0
 # HELP jvm_memory_bytes_used Used bytes of a given JVM memory area.
 # TYPE jvm_memory_bytes_used gauge
-jvm_memory_bytes_used{area="heap",} 5.55286312E8
-jvm_memory_bytes_used{area="nonheap",} 9.5781216E7
+jvm_memory_bytes_used{area="heap",} 4.1774652E8
+jvm_memory_bytes_used{area="nonheap",} 1.06125344E8
 # HELP jvm_memory_bytes_committed Committed (bytes) of a given JVM memory area.
 # TYPE jvm_memory_bytes_committed gauge
 jvm_memory_bytes_committed{area="heap",} 1.073741824E9
-jvm_memory_bytes_committed{area="nonheap",} 9.6796672E7
+jvm_memory_bytes_committed{area="nonheap",} 1.0944512E8
 # HELP jvm_memory_bytes_max Max (bytes) of a given JVM memory area.
 # TYPE jvm_memory_bytes_max gauge
 jvm_memory_bytes_max{area="heap",} 4.294967296E9
@@ -145,34 +99,34 @@ jvm_memory_bytes_init{area="heap",} 1.073741824E9
 jvm_memory_bytes_init{area="nonheap",} 7667712.0
 # HELP jvm_memory_pool_bytes_used Used bytes of a given JVM memory pool.
 # TYPE jvm_memory_pool_bytes_used gauge
-jvm_memory_pool_bytes_used{pool="CodeHeap 'non-nmethods'",} 3484928.0
-jvm_memory_pool_bytes_used{pool="Metaspace",} 5.0916368E7
-jvm_memory_pool_bytes_used{pool="CodeHeap 'profiled nmethods'",} 2.2374016E7
-jvm_memory_pool_bytes_used{pool="Compressed Class Space",} 6095520.0
-jvm_memory_pool_bytes_used{pool="G1 Eden Space",} 4.15236096E8
-jvm_memory_pool_bytes_used{pool="G1 Old Gen",} 5.8261288E7
-jvm_memory_pool_bytes_used{pool="G1 Survivor Space",} 8.1788928E7
-jvm_memory_pool_bytes_used{pool="CodeHeap 'non-profiled nmethods'",} 1.2910592E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'non-nmethods'",} 2054784.0
+jvm_memory_pool_bytes_used{pool="Metaspace",} 5.5936632E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'profiled nmethods'",} 2.6096E7
+jvm_memory_pool_bytes_used{pool="Compressed Class Space",} 6681384.0
+jvm_memory_pool_bytes_used{pool="G1 Eden Space",} 2.49561088E8
+jvm_memory_pool_bytes_used{pool="G1 Old Gen",} 9.6364536E7
+jvm_memory_pool_bytes_used{pool="G1 Survivor Space",} 7.1820896E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'non-profiled nmethods'",} 1.5363328E7
 # HELP jvm_memory_pool_bytes_committed Committed bytes of a given JVM memory pool.
 # TYPE jvm_memory_pool_bytes_committed gauge
-jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-nmethods'",} 3604480.0
-jvm_memory_pool_bytes_committed{pool="Metaspace",} 5.1511296E7
-jvm_memory_pool_bytes_committed{pool="CodeHeap 'profiled nmethods'",} 2.2413312E7
-jvm_memory_pool_bytes_committed{pool="Compressed Class Space",} 6356992.0
-jvm_memory_pool_bytes_committed{pool="G1 Eden Space",} 5.95591168E8
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-nmethods'",} 4259840.0
+jvm_memory_pool_bytes_committed{pool="Metaspace",} 5.6623104E7
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'profiled nmethods'",} 2.6148864E7
+jvm_memory_pool_bytes_committed{pool="Compressed Class Space",} 7012352.0
+jvm_memory_pool_bytes_committed{pool="G1 Eden Space",} 6.03979776E8
 jvm_memory_pool_bytes_committed{pool="G1 Old Gen",} 3.96361728E8
-jvm_memory_pool_bytes_committed{pool="G1 Survivor Space",} 8.1788928E7
-jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-profiled nmethods'",} 1.2910592E7
+jvm_memory_pool_bytes_committed{pool="G1 Survivor Space",} 7.340032E7
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-profiled nmethods'",} 1.540096E7
 # HELP jvm_memory_pool_bytes_max Max bytes of a given JVM memory pool.
 # TYPE jvm_memory_pool_bytes_max gauge
-jvm_memory_pool_bytes_max{pool="CodeHeap 'non-nmethods'",} 7606272.0
+jvm_memory_pool_bytes_max{pool="CodeHeap 'non-nmethods'",} 8257536.0
 jvm_memory_pool_bytes_max{pool="Metaspace",} -1.0
-jvm_memory_pool_bytes_max{pool="CodeHeap 'profiled nmethods'",} 1.22023936E8
+jvm_memory_pool_bytes_max{pool="CodeHeap 'profiled nmethods'",} 1.21700352E8
 jvm_memory_pool_bytes_max{pool="Compressed Class Space",} 1.073741824E9
 jvm_memory_pool_bytes_max{pool="G1 Eden Space",} -1.0
 jvm_memory_pool_bytes_max{pool="G1 Old Gen",} 4.294967296E9
 jvm_memory_pool_bytes_max{pool="G1 Survivor Space",} -1.0
-jvm_memory_pool_bytes_max{pool="CodeHeap 'non-profiled nmethods'",} 1.22028032E8
+jvm_memory_pool_bytes_max{pool="CodeHeap 'non-profiled nmethods'",} 1.21700352E8
 # HELP jvm_memory_pool_bytes_init Initial bytes of a given JVM memory pool.
 # TYPE jvm_memory_pool_bytes_init gauge
 jvm_memory_pool_bytes_init{pool="CodeHeap 'non-nmethods'",} 2555904.0
@@ -186,13 +140,13 @@ jvm_memory_pool_bytes_init{pool="CodeHeap 'non-profiled nmethods'",} 2555904.0
 # HELP jvm_memory_pool_collection_used_bytes Used bytes after last collection of a given JVM memory pool.
 # TYPE jvm_memory_pool_collection_used_bytes gauge
 jvm_memory_pool_collection_used_bytes{pool="G1 Eden Space",} 0.0
-jvm_memory_pool_collection_used_bytes{pool="G1 Old Gen",} 5.8261288E7
-jvm_memory_pool_collection_used_bytes{pool="G1 Survivor Space",} 8.1788928E7
+jvm_memory_pool_collection_used_bytes{pool="G1 Old Gen",} 9.6364536E7
+jvm_memory_pool_collection_used_bytes{pool="G1 Survivor Space",} 7.1820896E7
 # HELP jvm_memory_pool_collection_committed_bytes Committed after last collection bytes of a given JVM memory pool.
 # TYPE jvm_memory_pool_collection_committed_bytes gauge
-jvm_memory_pool_collection_committed_bytes{pool="G1 Eden Space",} 5.95591168E8
+jvm_memory_pool_collection_committed_bytes{pool="G1 Eden Space",} 6.03979776E8
 jvm_memory_pool_collection_committed_bytes{pool="G1 Old Gen",} 3.96361728E8
-jvm_memory_pool_collection_committed_bytes{pool="G1 Survivor Space",} 8.1788928E7
+jvm_memory_pool_collection_committed_bytes{pool="G1 Survivor Space",} 7.340032E7
 # HELP jvm_memory_pool_collection_max_bytes Max bytes after last collection of a given JVM memory pool.
 # TYPE jvm_memory_pool_collection_max_bytes gauge
 jvm_memory_pool_collection_max_bytes{pool="G1 Eden Space",} -1.0
@@ -203,83 +157,126 @@ jvm_memory_pool_collection_max_bytes{pool="G1 Survivor Space",} -1.0
 jvm_memory_pool_collection_init_bytes{pool="G1 Eden Space",} 5.24288E7
 jvm_memory_pool_collection_init_bytes{pool="G1 Old Gen",} 1.021313024E9
 jvm_memory_pool_collection_init_bytes{pool="G1 Survivor Space",} 0.0
+# HELP mc_dimension_tileentities The number of loaded ticking tileentities in a dim.
+# TYPE mc_dimension_tileentities gauge
+mc_dimension_tileentities{id="0",name="Overworld",} 17.0
 # HELP jvm_classes_currently_loaded The number of classes that are currently loaded in the JVM
 # TYPE jvm_classes_currently_loaded gauge
-jvm_classes_currently_loaded 9549.0
+jvm_classes_currently_loaded 10424.0
 # HELP jvm_classes_loaded_total The total number of classes that have been loaded since the JVM has started execution
 # TYPE jvm_classes_loaded_total counter
-jvm_classes_loaded_total 9549.0
+jvm_classes_loaded_total 10424.0
 # HELP jvm_classes_unloaded_total The total number of classes that have been unloaded since the JVM has started execution
 # TYPE jvm_classes_unloaded_total counter
 jvm_classes_unloaded_total 0.0
-# HELP mc_dimension_tileentities The number of loaded ticking tileentities in a dim.
-# TYPE mc_dimension_tileentities gauge
-mc_dimension_tileentities{id="-1",name="Nether",} 0.0
-mc_dimension_tileentities{id="1",name="The End",} 7.0
-mc_dimension_tileentities{id="0",name="Overworld",} 18.0
-# HELP mc_dimension_tileentities_detailed The number of loaded ticking tileentities in a dim per type.
-# TYPE mc_dimension_tileentities_detailed gauge
-mc_dimension_tileentities_detailed{dim_id="Overworld",dim="0",te_class="net.minecraft.tileentity.TileEntityMobSpawner",te_name="MobSpawner",} 4.0
-mc_dimension_tileentities_detailed{dim_id="Overworld",dim="0",te_class="net.minecraft.tileentity.TileEntityChest",te_name="Chest",} 5.0
-mc_dimension_tileentities_detailed{dim_id="Overworld",dim="0",te_class="net.minecraft.tileentity.TileEntityEndPortal",te_name="Airportal",} 9.0
-mc_dimension_tileentities_detailed{dim_id="Nether",dim="-1",te_class="net.minecraft.tileentity.TileEntityMobSpawner",te_name="MobSpawner",} 3.0
-mc_dimension_tileentities_detailed{dim_id="Nether",dim="-1",te_class="net.minecraft.tileentity.TileEntityChest",te_name="Chest",} 34.0
-# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
-# TYPE process_cpu_seconds_total counter
-process_cpu_seconds_total 34.08
-# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
-# TYPE process_start_time_seconds gauge
-process_start_time_seconds 1.737459980461E9
-# HELP process_open_fds Number of open file descriptors.
-# TYPE process_open_fds gauge
-process_open_fds 218.0
-# HELP process_max_fds Maximum number of open file descriptors.
-# TYPE process_max_fds gauge
-process_max_fds 524288.0
-# HELP process_virtual_memory_bytes Virtual memory size in bytes.
-# TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 9.837531136E9
-# HELP process_resident_memory_bytes Resident memory size in bytes.
-# TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 1.399013376E9
-# HELP jvm_buffer_pool_used_bytes Used bytes of a given JVM buffer pool.
-# TYPE jvm_buffer_pool_used_bytes gauge
-jvm_buffer_pool_used_bytes{pool="mapped",} 0.0
-jvm_buffer_pool_used_bytes{pool="direct",} 37259.0
-jvm_buffer_pool_used_bytes{pool="mapped - 'non-volatile memory'",} 0.0
-# HELP jvm_buffer_pool_capacity_bytes Bytes capacity of a given JVM buffer pool.
-# TYPE jvm_buffer_pool_capacity_bytes gauge
-jvm_buffer_pool_capacity_bytes{pool="mapped",} 0.0
-jvm_buffer_pool_capacity_bytes{pool="direct",} 37258.0
-jvm_buffer_pool_capacity_bytes{pool="mapped - 'non-volatile memory'",} 0.0
-# HELP jvm_buffer_pool_used_buffers Used buffers of a given JVM buffer pool.
-# TYPE jvm_buffer_pool_used_buffers gauge
-jvm_buffer_pool_used_buffers{pool="mapped",} 0.0
-jvm_buffer_pool_used_buffers{pool="direct",} 5.0
-jvm_buffer_pool_used_buffers{pool="mapped - 'non-volatile memory'",} 0.0
-# HELP mc_player_list The players connected to the server
-# TYPE mc_player_list gauge
-mc_player_list{id="a01a21f5-c117-3c1f-b5d0-e055b927f733",name="Developer",dim="The End",dim_id="1",} 1.0
 # HELP mc_dimension_chunks_loaded The number of loaded dimension chunks.
 # TYPE mc_dimension_chunks_loaded gauge
 mc_dimension_chunks_loaded{id="-1",name="Nether",} 0.0
-mc_dimension_chunks_loaded{id="1",name="The End",} 441.0
-mc_dimension_chunks_loaded{id="0",name="Overworld",} 625.0
+mc_dimension_chunks_loaded{id="1",name="The End",} 0.0
+mc_dimension_chunks_loaded{id="0",name="Overworld",} 484.0
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 11.71875
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.758477762181E9
+# HELP jvm_gc_collection_seconds Time spent in a given JVM garbage collector in seconds.
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="G1 Young Generation",} 11.0
+jvm_gc_collection_seconds_sum{gc="G1 Young Generation",} 0.134
+jvm_gc_collection_seconds_count{gc="G1 Concurrent GC",} 4.0
+jvm_gc_collection_seconds_sum{gc="G1 Concurrent GC",} 0.003
+jvm_gc_collection_seconds_count{gc="G1 Old Generation",} 1.0
+jvm_gc_collection_seconds_sum{gc="G1 Old Generation",} 0.027
+# HELP mc_server_tick_seconds Stats on server tick times.
+# TYPE mc_server_tick_seconds histogram
+mc_server_tick_seconds_bucket{le="0.01",} 1071.0
+mc_server_tick_seconds_bucket{le="0.025",} 1076.0
+mc_server_tick_seconds_bucket{le="0.05",} 1079.0
+mc_server_tick_seconds_bucket{le="0.1",} 1079.0
+mc_server_tick_seconds_bucket{le="0.25",} 1079.0
+mc_server_tick_seconds_bucket{le="0.5",} 1079.0
+mc_server_tick_seconds_bucket{le="1.0",} 1079.0
+mc_server_tick_seconds_bucket{le="+Inf",} 1079.0
+mc_server_tick_seconds_count 1079.0
+mc_server_tick_seconds_sum 2.2069251999999997
+# HELP mc_dimension_tick_seconds Stats on dimension tick times.
+# TYPE mc_dimension_tick_seconds histogram
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.01",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.025",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.05",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.1",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.25",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="0.5",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="1.0",} 1079.0
+mc_dimension_tick_seconds_bucket{id="-1",name="Nether",le="+Inf",} 1079.0
+mc_dimension_tick_seconds_count{id="-1",name="Nether",} 1079.0
+mc_dimension_tick_seconds_sum{id="-1",name="Nether",} 0.043748000000000085
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.01",} 1075.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.025",} 1078.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.05",} 1079.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.1",} 1079.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.25",} 1079.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="0.5",} 1079.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="1.0",} 1079.0
+mc_dimension_tick_seconds_bucket{id="0",name="Overworld",le="+Inf",} 1079.0
+mc_dimension_tick_seconds_count{id="0",name="Overworld",} 1079.0
+mc_dimension_tick_seconds_sum{id="0",name="Overworld",} 1.8852141
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.01",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.025",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.05",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.1",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.25",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="0.5",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="1.0",} 1079.0
+mc_dimension_tick_seconds_bucket{id="1",name="The End",le="+Inf",} 1079.0
+mc_dimension_tick_seconds_count{id="1",name="The End",} 1079.0
+mc_dimension_tick_seconds_sum{id="1",name="The End",} 0.007678400000000012
+# HELP mc_server_ticks_total_counter DIM0's total ticks
+# TYPE mc_server_ticks_total_counter gauge
+mc_server_ticks_total_counter 10079.0
+# HELP jvm_threads_current Current thread count of a JVM
+# TYPE jvm_threads_current gauge
+jvm_threads_current 19.0
+# HELP jvm_threads_daemon Daemon thread count of a JVM
+# TYPE jvm_threads_daemon gauge
+jvm_threads_daemon 16.0
+# HELP jvm_threads_peak Peak thread count of a JVM
+# TYPE jvm_threads_peak gauge
+jvm_threads_peak 19.0
+# HELP jvm_threads_started_total Started thread count of a JVM
+# TYPE jvm_threads_started_total counter
+jvm_threads_started_total 26.0
+# HELP jvm_threads_deadlocked Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# HELP jvm_threads_deadlocked_monitor Cycles of JVM-threads that are in deadlock waiting to acquire object monitors
+# TYPE jvm_threads_deadlocked_monitor gauge
+jvm_threads_deadlocked_monitor 0.0
+# HELP jvm_threads_state Current count of threads by state
+# TYPE jvm_threads_state gauge
+jvm_threads_state{state="NEW",} 0.0
+jvm_threads_state{state="TERMINATED",} 0.0
+jvm_threads_state{state="RUNNABLE",} 11.0
+jvm_threads_state{state="BLOCKED",} 0.0
+jvm_threads_state{state="WAITING",} 1.0
+jvm_threads_state{state="TIMED_WAITING",} 7.0
+jvm_threads_state{state="UNKNOWN",} 0.0
 # HELP jvm_memory_pool_allocated_bytes_created Total bytes allocated in a given JVM memory pool. Only updated after GC, not continuously.
 # TYPE jvm_memory_pool_allocated_bytes_created gauge
-jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'profiled nmethods'",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="G1 Old Gen",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="G1 Eden Space",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'non-profiled nmethods'",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="G1 Survivor Space",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="Compressed Class Space",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="Metaspace",} 1.737459998719E9
-jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'non-nmethods'",} 1.737459998719E9
+jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'profiled nmethods'",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="G1 Old Gen",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="G1 Eden Space",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'non-profiled nmethods'",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="G1 Survivor Space",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="Compressed Class Space",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="Metaspace",} 1.758477798111E9
+jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'non-nmethods'",} 1.758477798111E9
 # HELP mc_dimension_tick_seconds_created Stats on dimension tick times.
 # TYPE mc_dimension_tick_seconds_created gauge
-mc_dimension_tick_seconds_created{id="-1",name="Nether",} 1.737459988256E9
-mc_dimension_tick_seconds_created{id="0",name="Overworld",} 1.737459988261E9
-mc_dimension_tick_seconds_created{id="1",name="The End",} 1.737459988261E9
+mc_dimension_tick_seconds_created{id="-1",name="Nether",} 1.758477771749E9
+mc_dimension_tick_seconds_created{id="0",name="Overworld",} 1.758477771756E9
+mc_dimension_tick_seconds_created{id="1",name="The End",} 1.758477771755E9
 # HELP mc_server_tick_seconds_created Stats on server tick times.
 # TYPE mc_server_tick_seconds_created gauge
-mc_server_tick_seconds_created 1.7374599882E9
+mc_server_tick_seconds_created 1.758477771658E9

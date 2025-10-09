@@ -1,7 +1,8 @@
-package com.github.cpburnz.minecraft_prometheus_exporter.Collectors;
+package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldProvider;
 
 import com.github.cpburnz.minecraft_prometheus_exporter.ExporterConfig;
+import com.github.cpburnz.minecraft_prometheus_exporter.PrometheusExporterMod;
 import com.gtnewhorizon.gtnhlib.eventbus.EventBusSubscriber;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -44,12 +46,18 @@ public class Ticks extends BaseCollector {
     private Histogram.Timer dim_tick_timer;
 
     /**
+     * Contains a dimensions id if any ticks have been started during this collectors lifecycle
+     */
+    private final ConcurrentHashMap.KeySetView<Integer, Boolean> dims_have_ticked;
+
+    /**
      * The histogram buckets to use for ticks.
      */
     private static final double[] TICK_BUCKETS = new double[] { 0.01, 0.025, 0.05, 0.10, 0.25, 0.5, 1.0, };
 
     public Ticks(MinecraftServer mc_server) {
         super(mc_server);
+        this.dims_have_ticked = ConcurrentHashMap.newKeySet(3);
 
         // Setup server metrics.
         this.server_tick_seconds = Histogram.build()
@@ -117,12 +125,23 @@ public class Ticks extends BaseCollector {
     public void startDimensionTick(WorldProvider dim) {
         int id = dim.dimensionId;
         if (this.dim_tick_timer != null) {
-            throw new IllegalStateException(
-                "Dimension " + id
-                    + " tick started before stopping previous tick for "
-                    + "dimension "
-                    + this.dim_tick_id
-                    + ".");
+            switch (ExporterConfig.collector.collector_mc_dimension_tick_errors) {
+                case IGNORE -> {} // Ignore error.
+
+                case LOG -> PrometheusExporterMod.LOG
+                    .debug("Dimension {} tick started before stopping previous tick.", id);
+
+                case STRICT -> throw new IllegalStateException(
+                    "Dimension " + id
+                        + " tick started before stopping previous tick for "
+                        + "dimension "
+                        + this.dim_tick_id
+                        + ".");
+            }
+
+            // Stop forgotten timer.
+            dim_tick_timer.close();
+            dim_tick_timer = null;
         }
 
         String id_str = Integer.toString(id);
@@ -130,6 +149,7 @@ public class Ticks extends BaseCollector {
         this.dim_tick_id = id;
         this.dim_tick_timer = this.dim_tick_seconds.labels(id_str, name)
             .startTimer();
+        this.dims_have_ticked.add(id);
     }
 
     /**
@@ -140,7 +160,23 @@ public class Ticks extends BaseCollector {
     public void stopDimensionTick(WorldProvider dim) {
         int id = dim.dimensionId;
         if (this.dim_tick_timer == null) {
-            throw new IllegalStateException("Dimension " + id + " tick stopped without an active tick.");
+            if (!this.dims_have_ticked.contains(id)) {
+                // WARNING: After restarting the collector, we may start during a
+                // dimension tick. Do not fail in this scenario.
+                return;
+            }
+
+            switch (ExporterConfig.collector.collector_mc_dimension_tick_errors) {
+                case IGNORE -> {} // Ignore error.
+
+                case LOG -> PrometheusExporterMod.LOG.debug("Dimension {} tick stopped without an active tick.", id);
+
+                case STRICT -> throw new IllegalStateException(
+                    ("Dimension " + id + " tick stopped without an active tick."));
+            }
+
+            // No timer to stop.
+            return;
         } else if (this.dim_tick_id != null && this.dim_tick_id != id) {
             throw new IllegalStateException(
                 "Dimension " + id

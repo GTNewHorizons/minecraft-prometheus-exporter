@@ -1,4 +1,4 @@
-package com.github.cpburnz.minecraft_prometheus_exporter.Collectors;
+package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import net.minecraft.server.MinecraftServer;
 
