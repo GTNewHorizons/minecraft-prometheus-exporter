@@ -189,7 +189,8 @@ public class PrometheusExporterMod {
      */
     @Mod.EventHandler
     public void onServerStarted(FMLServerStartedEvent event) throws IOException {
-        if (event.getSide().isServer()) {
+        if (event.getSide()
+            .isServer()) {
             this.startExporter();
         }
     }

@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
-import cpw.mods.fml.common.Mod;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldProvider;
 
