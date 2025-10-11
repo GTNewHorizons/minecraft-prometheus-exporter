@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
+import cpw.mods.fml.common.Mod;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldProvider;
 
@@ -50,6 +51,8 @@ public class Ticks extends BaseCollector {
      */
     private final ConcurrentHashMap.KeySetView<Integer, Boolean> dims_have_ticked;
 
+    private boolean server_has_ticked;
+
     /**
      * The histogram buckets to use for ticks.
      */
@@ -58,6 +61,7 @@ public class Ticks extends BaseCollector {
     public Ticks(MinecraftServer mc_server) {
         super(mc_server);
         this.dims_have_ticked = ConcurrentHashMap.newKeySet(3);
+        server_has_ticked = false;
 
         // Setup server metrics.
         this.server_tick_seconds = Histogram.build()
@@ -200,6 +204,7 @@ public class Ticks extends BaseCollector {
         }
 
         this.server_tick_timer = this.server_tick_seconds.startTimer();
+        server_has_ticked = true;
     }
 
     /**
@@ -207,20 +212,28 @@ public class Ticks extends BaseCollector {
      */
     public void stopServerTick() {
         if (this.server_tick_timer == null) {
+            if (!server_has_ticked) {
+                // WARNING: After restarting the collector, we may start during a
+                // server tick. Do not fail in this scenario.
+                return;
+            }
             throw new IllegalStateException("Server tick stopped without an active tick.");
         }
 
         server_tick_timer.observeDuration();
         this.server_tick_timer = null;
+        server_has_ticked = false;
     }
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        // Record server tick.
-        if (event.phase == TickEvent.Phase.START) {
-            Instance.startServerTick();
-        } else if (event.phase == TickEvent.Phase.END) {
-            Instance.stopServerTick();
+        if (Instance != null) {
+            // Record server tick.
+            if (event.phase == TickEvent.Phase.START) {
+                Instance.startServerTick();
+            } else if (event.phase == TickEvent.Phase.END) {
+                Instance.stopServerTick();
+            }
         }
     }
 
@@ -231,12 +244,14 @@ public class Ticks extends BaseCollector {
      */
     @SubscribeEvent
     public static void onDimensionTick(TickEvent.WorldTickEvent event) {
-        // Record dimension tick.
-        WorldProvider dim = event.world.provider;
-        if (event.phase == TickEvent.Phase.START) {
-            Instance.startDimensionTick(dim);
-        } else if (event.phase == TickEvent.Phase.END) {
-            Instance.stopDimensionTick(dim);
+        if (Instance != null) {
+            // Record dimension tick.
+            WorldProvider dim = event.world.provider;
+            if (event.phase == TickEvent.Phase.START) {
+                Instance.startDimensionTick(dim);
+            } else if (event.phase == TickEvent.Phase.END) {
+                Instance.stopDimensionTick(dim);
+            }
         }
     }
 }
