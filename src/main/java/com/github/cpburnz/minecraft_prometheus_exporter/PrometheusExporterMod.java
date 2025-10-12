@@ -150,14 +150,14 @@ public class PrometheusExporterMod {
      */
     @Mod.EventHandler
     public void onPreInitialization(FMLPreInitializationEvent event) {
-        if (event.getSide() == Side.CLIENT) return;
-
         // Register the server config.
         try {
             ConfigurationManager.registerConfig(ExporterConfig.class);
         } catch (ConfigException e) {
             throw new RuntimeException(e);
         }
+
+        if (event.getSide() == Side.CLIENT) return;
 
         // Register event handlers.
         FMLCommonHandler.instance()
@@ -189,7 +189,10 @@ public class PrometheusExporterMod {
      */
     @Mod.EventHandler
     public void onServerStarted(FMLServerStartedEvent event) throws IOException {
-        this.startExporter();
+        if (event.getSide()
+            .isServer()) {
+            this.startExporter();
+        }
     }
 
     /**
@@ -199,7 +202,9 @@ public class PrometheusExporterMod {
      */
     @Mod.EventHandler
     public void onServerStopped(FMLServerStoppedEvent event) {
-        this.stopExporter();
+        if (this.is_running) {
+            this.stopExporter();
+        }
         this.mc_server = null;
     }
 
