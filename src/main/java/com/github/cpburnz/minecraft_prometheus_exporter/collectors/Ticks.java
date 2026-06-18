@@ -1,8 +1,11 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
@@ -55,6 +58,13 @@ public class Ticks extends Collector implements Collector.Describable {
      * Contains a dimensions id if any ticks have been started during this collectors lifecycle
      */
     private final ConcurrentHashMap.KeySetView<Integer, Boolean> dims_have_ticked;
+
+    /**
+     * Caches the histogram child per dimension id so the per-tick hot path
+     * avoids the {@code labels(...)} lookup and the label string allocations.
+     * Only touched on the server thread (tick events).
+     */
+    private final Map<Integer, Histogram.Child> dim_tick_children = new HashMap<>(3);
 
     private boolean server_has_ticked;
 
@@ -123,6 +133,24 @@ public class Ticks extends Collector implements Collector.Describable {
     }
 
     /**
+     * Get the cached histogram child for a dimension, creating it on first use.
+     * The dimension name is only resolved on a cache miss.
+     *
+     * @param id   The dimension id.
+     * @param name Supplies the dimension name, called only on a cache miss.
+     *
+     * @return The histogram child for the dimension.
+     */
+    Histogram.Child dimTickChild(int id, Supplier<String> name) {
+        Histogram.Child child = this.dim_tick_children.get(id);
+        if (child == null) {
+            child = this.dim_tick_seconds.labels(Integer.toString(id), name.get());
+            this.dim_tick_children.put(id, child);
+        }
+        return child;
+    }
+
+    /**
      * Record when a dimension tick begins.
      *
      * @param dim The dimension type.
@@ -149,10 +177,8 @@ public class Ticks extends Collector implements Collector.Describable {
             dim_tick_timer = null;
         }
 
-        String id_str = Integer.toString(id);
-        String name = dim.getDimensionName();
         this.dim_tick_id = id;
-        this.dim_tick_timer = this.dim_tick_seconds.labels(id_str, name)
+        this.dim_tick_timer = this.dimTickChild(id, dim::getDimensionName)
             .startTimer();
         this.dims_have_ticked.add(id);
     }
