@@ -6,6 +6,10 @@ Known compatible Grafana (v9) dashboards:
 - [Minecraft Server Stats] built by [randombk].
 - [Updated Default with Entity Stats] modified by [malteeez]: 
 
+> Note: the caching rewrite renamed several metrics and labels. These
+> dashboards target the old names and will need updating - see the metric
+> rename table in the [README](README.md#metric-renames-caching-rewrite).
+
 
 [Minecraft Server Stats]: https://grafana.com/grafana/dashboards/16508-minecraft-server-stats/
 [randombk]: https://github.com/randombk

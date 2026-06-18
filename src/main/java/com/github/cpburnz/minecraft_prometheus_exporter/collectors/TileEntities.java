@@ -1,7 +1,6 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,26 +16,26 @@ import io.prometheus.client.GaugeMetricFamily;
 
 public class TileEntities extends BaseCollector {
 
-    public TileEntities(MinecraftServer mc_server) {
-        super(mc_server);
+    public TileEntities(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "tileentities", intervalTicks);
     }
 
     private static GaugeMetricFamily newTEMetric() {
         return new GaugeMetricFamily(
-            "mc_dimension_tileentities",
-            "The number of loaded ticking tileentities in a dim.",
-            Arrays.asList("id", "name"));
+            "mc_tileentities",
+            "The number of loaded ticking tile entities per dimension.",
+            Arrays.asList("dimension_id", "dimension_name"));
     }
 
     private static GaugeMetricFamily newTEDetailedMetric() {
         return new GaugeMetricFamily(
-            "mc_dimension_tileentities_detailed",
-            "The number of loaded ticking tileentities in a dim per type.",
-            Arrays.asList("dim_id", "dim", "te_class", "te_name"));
+            "mc_tileentities_detailed",
+            "The number of loaded ticking tile entities per dimension per type.",
+            Arrays.asList("dimension_id", "dimension_name", "te_class", "te_name"));
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily metric;
         if (ExporterConfig.collector.tileentities_details) {
             TObjectIntHashMap<EntityKey> te_totals = new TObjectIntHashMap<>();
@@ -75,14 +74,6 @@ public class TileEntities extends BaseCollector {
         }
 
         return Arrays.asList(metric);
-    }
-
-    static final List<MetricFamilySamples> desc = Collections
-        .singletonList(ExporterConfig.collector.tileentities_details ? newTEDetailedMetric() : newTEMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 
     private static class EntityKey {

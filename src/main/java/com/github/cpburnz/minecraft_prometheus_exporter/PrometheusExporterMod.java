@@ -11,9 +11,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Chunks;
+import com.github.cpburnz.minecraft_prometheus_exporter.collectors.CollectorScheduler;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Entities;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.PlayerStatistics;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Players;
+import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Sampler;
+import com.github.cpburnz.minecraft_prometheus_exporter.collectors.SelfMetrics;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Teams;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Ticks;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.TileEntities;
@@ -59,6 +62,13 @@ public class PrometheusExporterMod {
     public static final Logger LOG = LogManager.getLogger(MODID);
 
     private @Nullable HTTPServer http_server;
+
+    /**
+     * Drives interval-based refreshes of the sampled collectors on the server
+     * thread.
+     */
+    private @Nullable CollectorScheduler scheduler;
+
     /**
      * Whether the exporter is running.
      */
@@ -81,6 +91,16 @@ public class PrometheusExporterMod {
      * Unregister the metrics collectors.
      */
     private void closeCollectors() {
+        // Stop the refresh scheduler.
+        if (this.scheduler != null) {
+            this.scheduler.clear();
+            this.scheduler = null;
+        }
+        CollectorScheduler.Instance = null;
+
+        // Stop feeding the event-driven tick collector.
+        Ticks.Instance = null;
+
         // Unregister all collectors.
         CollectorRegistry.defaultRegistry.clear();
     }
@@ -102,17 +122,44 @@ public class PrometheusExporterMod {
      * Register the metrics collectors.
      */
     private void initCollectors() {
-        // Collect JVM stats.
-        if (ExporterConfig.collector.jwm_collector) DefaultExports.register(CollectorRegistry.defaultRegistry);
+        ExporterConfig.Collector cfg = ExporterConfig.collector;
 
-        if (ExporterConfig.collector.entities) new Entities(this.mc_server).register();
-        if (ExporterConfig.collector.tileentities) new TileEntities(this.mc_server).register();
-        if (ExporterConfig.collector.ticks) new Ticks(this.mc_server).register();
-        if (ExporterConfig.collector.chunks) new Chunks(this.mc_server).register();
-        if (ExporterConfig.collector.players) new Players(this.mc_server).register();
-        if (ExporterConfig.collector.player_statistics) new PlayerStatistics(this.mc_server).register();
-        if (ExporterConfig.collector.teams && ModCompat.ServerUtilities.isLoaded())
-            new Teams(this.mc_server).register();
+        // Start the refresh scheduler that samples on the server thread.
+        this.scheduler = new CollectorScheduler();
+        CollectorScheduler.Instance = this.scheduler;
+
+        // Collect JVM stats.
+        if (cfg.jwm_collector) DefaultExports.register(CollectorRegistry.defaultRegistry);
+
+        // The Ticks collector is event-driven, not interval-sampled.
+        if (cfg.ticks) new Ticks(this.mc_server).register();
+
+        if (cfg.entities) this.addSampler(new Entities(this.mc_server, cfg.entities_interval_ticks));
+        if (cfg.tileentities) this.addSampler(new TileEntities(this.mc_server, cfg.tileentities_interval_ticks));
+        if (cfg.chunks) this.addSampler(new Chunks(this.mc_server, cfg.chunks_interval_ticks));
+        if (cfg.players) this.addSampler(new Players(this.mc_server, cfg.players_interval_ticks));
+        if (cfg.player_statistics)
+            this.addSampler(new PlayerStatistics(this.mc_server, cfg.player_statistics_interval_ticks));
+        if (cfg.teams && ModCompat.ServerUtilities.isLoaded())
+            this.addSampler(new Teams(this.mc_server, cfg.teams_interval_ticks));
+
+        // Self-monitoring metrics about the collectors.
+        if (cfg.self_metrics) new SelfMetrics(this.scheduler).register();
+
+        // Populate every snapshot once so the first scrape is not empty. Runs on
+        // the server thread (server-started event).
+        this.scheduler.refreshAll();
+    }
+
+    /**
+     * Register a sampler both with the refresh scheduler and the Prometheus
+     * registry.
+     *
+     * @param sampler The sampler.
+     */
+    private void addSampler(Sampler sampler) {
+        this.scheduler.register(sampler);
+        sampler.register();
     }
 
     /**

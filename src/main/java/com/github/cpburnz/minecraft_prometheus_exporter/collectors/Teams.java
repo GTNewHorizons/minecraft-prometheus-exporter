@@ -19,33 +19,33 @@ import serverutils.lib.data.Universe;
 
 public class Teams extends BaseCollector {
 
-    public Teams(MinecraftServer mc_server) {
-        super(mc_server);
+    public Teams(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "teams", intervalTicks);
     }
 
     private static GaugeMetricFamily newClaimsMetric() {
         return new GaugeMetricFamily(
-            "mc_teams_chunk_claims",
-            "Number of chunk claims per team per dim.",
-            Arrays.asList("team_id", "team_name", "team_type", "dim_id", "dim_name"));
+            "mc_team_chunk_claims",
+            "Number of chunk claims per team per dimension.",
+            Arrays.asList("team_id", "team_name", "team_type", "dimension_id", "dimension_name"));
     }
 
     private static GaugeMetricFamily newLoadsMetric() {
         return new GaugeMetricFamily(
-            "mc_teams_chunk_loads",
-            "Number of chunks being force loaded per team per dim.",
-            Arrays.asList("team_id", "team_name", "team_type", "dim_id", "dim_name"));
+            "mc_team_chunk_loads",
+            "Number of chunks being force loaded per team per dimension.",
+            Arrays.asList("team_id", "team_name", "team_type", "dimension_id", "dimension_name"));
     }
 
     private static GaugeMetricFamily newPlayersMetric() {
         return new GaugeMetricFamily(
-            "mc_teams_players",
-            "Players in a team",
-            Arrays.asList("team_id", "team_name", "player_uuid", "player_name"));
+            "mc_team_members",
+            "Players in a team.",
+            Arrays.asList("team_id", "team_name", "player_id", "player_name"));
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily claimsMetric = newClaimsMetric();
         GaugeMetricFamily loadsMetric = newLoadsMetric();
         GaugeMetricFamily playersMetric = newPlayersMetric();
@@ -97,13 +97,5 @@ public class Teams extends BaseCollector {
         }
 
         return Arrays.asList(claimsMetric, loadsMetric, playersMetric);
-    }
-
-    static final List<MetricFamilySamples> desc = Arrays
-        .asList(newClaimsMetric(), newLoadsMetric(), newPlayersMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 }

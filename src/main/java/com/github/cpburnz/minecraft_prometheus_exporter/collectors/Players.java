@@ -1,7 +1,6 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,19 +16,19 @@ import io.prometheus.client.GaugeMetricFamily;
 
 public class Players extends BaseCollector {
 
-    public Players(MinecraftServer mc_server) {
-        super(mc_server);
+    public Players(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "players", intervalTicks);
     }
 
     private static GaugeMetricFamily newMetric() {
         return new GaugeMetricFamily(
-            "mc_player_list",
-            "The players connected to the server",
-            Arrays.asList("id", "name", "dim", "dim_id"));
+            "mc_player_info",
+            "The players connected to the server.",
+            Arrays.asList("player_id", "player_name", "dimension_name", "dimension_id"));
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily metric = newMetric();
 
         for (Object playerObj : this.mc_server.getConfigurationManager().playerEntityList) {
@@ -57,12 +56,5 @@ public class Players extends BaseCollector {
         }
 
         return Arrays.asList(metric);
-    }
-
-    static final List<MetricFamilySamples> desc = Collections.singletonList(newMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 }
