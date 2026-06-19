@@ -88,12 +88,12 @@ public class Ticks extends Collector implements Collector.Describable {
         this.dim_tick_seconds = Histogram.build()
             .buckets(TICK_BUCKETS)
             .name("mc_dimension_tick_seconds")
-            .labelNames("id", "name")
+            .labelNames("dimension_id", "dimension_name")
             .help("Stats on dimension tick times.")
             .create();
 
         this.server_total_ticks = Gauge.build()
-            .name("mc_server_ticks_total_counter")
+            .name("mc_server_ticks_total")
             .help("DIM0's total ticks")
             .create();
 

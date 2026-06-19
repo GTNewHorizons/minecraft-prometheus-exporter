@@ -18,9 +18,9 @@ public class Entities extends BaseCollector {
 
     private static GaugeMetricFamily newMetric() {
         return new GaugeMetricFamily(
-            "mc_entities_total",
-            "The number of entities in each dimension by type.",
-            Arrays.asList("dim", "dim_id", "id", "type"));
+            "mc_entities",
+            "The number of loaded entities in each dimension by type.",
+            Arrays.asList("dimension_name", "dimension_id", "entity_id", "entity_type"));
     }
 
     public Entities(MinecraftServer mc_server, int intervalTicks) {

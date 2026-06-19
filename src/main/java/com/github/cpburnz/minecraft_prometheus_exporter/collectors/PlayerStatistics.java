@@ -51,7 +51,7 @@ public class PlayerStatistics extends BaseCollector {
         return new GaugeMetricFamily(
             "mc_player_stat_total",
             "The general stats about players.",
-            Arrays.asList("code", "name", "player_id", "player_name"));
+            Arrays.asList("stat_code", "stat_name", "player_id", "player_name"));
     }
 
     @Override

@@ -22,9 +22,9 @@ public class Players extends BaseCollector {
 
     private static GaugeMetricFamily newMetric() {
         return new GaugeMetricFamily(
-            "mc_player_list",
-            "The players connected to the server",
-            Arrays.asList("id", "name", "dim", "dim_id"));
+            "mc_player_info",
+            "The players connected to the server.",
+            Arrays.asList("player_id", "player_name", "dimension_name", "dimension_id"));
     }
 
     @Override
