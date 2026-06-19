@@ -17,9 +17,9 @@ public class Chunks extends BaseCollector {
 
     private static GaugeMetricFamily newMetric() {
         return new GaugeMetricFamily(
-            "mc_dimension_chunks_loaded",
-            "The number of loaded dimension chunks.",
-            Arrays.asList("id", "name"));
+            "mc_chunks_loaded",
+            "The number of loaded chunks per dimension.",
+            Arrays.asList("dimension_id", "dimension_name"));
     }
 
     @Override

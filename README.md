@@ -25,6 +25,29 @@ If you are coming from the upstream repo, the old config file will transfer the 
 The following changes occured that may require panel adjustments from coming from upstream:
 - mc_player_list: current dimension added
 
+### Metric renames (caching rewrite)
+
+Metric names and labels were standardized to Prometheus naming conventions
+(consistent `dimension_id` / `dimension_name` labels, no `_total` suffix on
+current-value gauges, singular `team` prefix). Update any dashboards accordingly:
+
+| Old | New |
+|-----|-----|
+| `mc_dimension_tick_seconds{id,name}` | `mc_dimension_tick_seconds{dimension_id,dimension_name}` |
+| `mc_server_ticks_total_counter` | `mc_server_ticks_total` |
+| `mc_entities_total{dim,dim_id,id,type}` | `mc_entities{dimension_name,dimension_id,entity_id,entity_type}` |
+| `mc_dimension_tileentities{id,name}` | `mc_tileentities{dimension_id,dimension_name}` |
+| `mc_dimension_tileentities_detailed{dim_id,dim,te_class,te_name}` | `mc_tileentities_detailed{dimension_id,dimension_name,te_class,te_name}` |
+| `mc_dimension_chunks_loaded{id,name}` | `mc_chunks_loaded{dimension_id,dimension_name}` |
+| `mc_player_list{id,name,dim,dim_id}` | `mc_player_info{player_id,player_name,dimension_name,dimension_id}` |
+| `mc_player_stat_total{code,name,...}` | `mc_player_stat_total{stat_code,stat_name,...}` |
+| `mc_teams_chunk_claims{...,dim_id,dim_name}` | `mc_team_chunk_claims{...,dimension_id,dimension_name}` |
+| `mc_teams_chunk_loads{...,dim_id,dim_name}` | `mc_team_chunk_loads{...,dimension_id,dimension_name}` |
+| `mc_teams_players{...,player_uuid,...}` | `mc_team_members{...,player_id,...}` |
+
+New self-monitoring metrics: `mc_collector_refresh_duration_seconds{collector}`
+and `mc_collector_staleness_seconds{collector}`.
+
 Configuration
 -------------
 

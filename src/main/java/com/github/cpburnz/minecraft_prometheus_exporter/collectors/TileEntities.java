@@ -22,16 +22,16 @@ public class TileEntities extends BaseCollector {
 
     private static GaugeMetricFamily newTEMetric() {
         return new GaugeMetricFamily(
-            "mc_dimension_tileentities",
-            "The number of loaded ticking tileentities in a dim.",
-            Arrays.asList("id", "name"));
+            "mc_tileentities",
+            "The number of loaded ticking tile entities per dimension.",
+            Arrays.asList("dimension_id", "dimension_name"));
     }
 
     private static GaugeMetricFamily newTEDetailedMetric() {
         return new GaugeMetricFamily(
-            "mc_dimension_tileentities_detailed",
-            "The number of loaded ticking tileentities in a dim per type.",
-            Arrays.asList("dim_id", "dim", "te_class", "te_name"));
+            "mc_tileentities_detailed",
+            "The number of loaded ticking tile entities per dimension per type.",
+            Arrays.asList("dimension_id", "dimension_name", "te_class", "te_name"));
     }
 
     @Override

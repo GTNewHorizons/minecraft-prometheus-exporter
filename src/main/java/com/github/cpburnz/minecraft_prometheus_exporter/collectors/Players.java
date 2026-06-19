@@ -22,14 +22,22 @@ public class Players extends BaseCollector {
 
     private static GaugeMetricFamily newMetric() {
         return new GaugeMetricFamily(
-            "mc_player_list",
-            "The players connected to the server",
-            Arrays.asList("id", "name", "dim", "dim_id"));
+            "mc_player_info",
+            "The players connected to the server.",
+            Arrays.asList("player_id", "player_name", "dimension_name", "dimension_id"));
+    }
+
+    private static GaugeMetricFamily newPositionMetric() {
+        return new GaugeMetricFamily(
+            "mc_player_position",
+            "The position of connected players, one series per axis.",
+            Arrays.asList("player_id", "player_name", "axis"));
     }
 
     @Override
     protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily metric = newMetric();
+        GaugeMetricFamily position = newPositionMetric();
 
         for (Object playerObj : this.mc_server.getConfigurationManager().playerEntityList) {
             // Get player profile.
@@ -53,8 +61,15 @@ public class Players extends BaseCollector {
                 dimID = world.provider.dimensionId;
             }
             metric.addMetric(Arrays.asList(id_str, name, dimName, Integer.toString(dimID)), 1);
+
+            // Position is exposed as gauge values (not labels) to keep cardinality
+            // bounded, one series per axis. Reading the entity here is safe:
+            // sample() runs on the server thread.
+            position.addMetric(Arrays.asList(id_str, name, "x"), player.posX);
+            position.addMetric(Arrays.asList(id_str, name, "y"), player.posY);
+            position.addMetric(Arrays.asList(id_str, name, "z"), player.posZ);
         }
 
-        return Arrays.asList(metric);
+        return Arrays.asList(metric, position);
     }
 }

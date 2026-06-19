@@ -54,6 +54,15 @@ public class ExporterConfig {
         @Config.Comment("Whether to expose self-monitoring metrics (per-collector refresh duration and staleness)")
         public boolean self_metrics;
 
+        @Config.DefaultBoolean(false)
+        @Config.Comment("Whether to collect per-dimension world time and weather metrics")
+        public boolean environment;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(40)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh world time and weather metrics")
+        public int environment_interval_ticks;
+
         @Config.RangeInt(min = 1, max = 72000)
         @Config.DefaultInt(100)
         @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh entity metrics")
