@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Chunks;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.CollectorScheduler;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Entities;
+import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Environment;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.PlayerStatistics;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Players;
 import com.github.cpburnz.minecraft_prometheus_exporter.collectors.Sampler;
@@ -142,6 +143,7 @@ public class PrometheusExporterMod {
             this.addSampler(new PlayerStatistics(this.mc_server, cfg.player_statistics_interval_ticks));
         if (cfg.teams && ModCompat.ServerUtilities.isLoaded())
             this.addSampler(new Teams(this.mc_server, cfg.teams_interval_ticks));
+        if (cfg.environment) this.addSampler(new Environment(this.mc_server, cfg.environment_interval_ticks));
 
         // Self-monitoring metrics about the collectors.
         if (cfg.self_metrics) new SelfMetrics(this.scheduler).register();
