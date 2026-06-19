@@ -172,8 +172,9 @@ public class Ticks extends Collector implements Collector.Describable {
                         + ".");
             }
 
-            // Stop forgotten timer.
-            dim_tick_timer.close();
+            // Discard the forgotten timer WITHOUT observing it: close()/
+            // observeDuration() would record a bogus, inflated duration (orphaned
+            // start -> this start) into the histogram. Just drop the reference.
             dim_tick_timer = null;
         }
 
