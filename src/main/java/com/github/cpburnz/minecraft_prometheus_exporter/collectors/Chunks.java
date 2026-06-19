@@ -1,7 +1,6 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.server.MinecraftServer;
@@ -12,8 +11,8 @@ import io.prometheus.client.GaugeMetricFamily;
 
 public class Chunks extends BaseCollector {
 
-    public Chunks(MinecraftServer mc_server) {
-        super(mc_server);
+    public Chunks(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "chunks", intervalTicks);
     }
 
     private static GaugeMetricFamily newMetric() {
@@ -24,7 +23,7 @@ public class Chunks extends BaseCollector {
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily metric = newMetric();
 
         for (WorldServer world : DimensionManager.getWorlds()) {
@@ -36,12 +35,5 @@ public class Chunks extends BaseCollector {
         }
 
         return Arrays.asList(metric);
-    }
-
-    static final List<MetricFamilySamples> desc = Collections.singletonList(newMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 }
