@@ -1,7 +1,6 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,12 +23,12 @@ public class Entities extends BaseCollector {
             Arrays.asList("dim", "dim_id", "id", "type"));
     }
 
-    public Entities(MinecraftServer mc_server) {
-        super(mc_server);
+    public Entities(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "entities", intervalTicks);
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         TObjectIntHashMap<EntityKey> entity_totals = new TObjectIntHashMap<>();
         for (WorldServer world : mc_server.worldServers) {
             // Get world info.
@@ -67,13 +66,6 @@ public class Entities extends BaseCollector {
         }
 
         return Arrays.asList(metric);
-    }
-
-    static final List<MetricFamilySamples> desc = Collections.singletonList(newMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 
     private static class EntityKey {

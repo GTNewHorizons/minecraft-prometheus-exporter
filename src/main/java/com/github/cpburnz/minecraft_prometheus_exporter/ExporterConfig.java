@@ -50,6 +50,40 @@ public class ExporterConfig {
         @Config.Comment("Whether to collect metrics on ServerUtilities teams")
         public boolean teams;
 
+        @Config.DefaultBoolean(true)
+        @Config.Comment("Whether to expose self-monitoring metrics (per-collector refresh duration and staleness)")
+        public boolean self_metrics;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(100)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh entity metrics")
+        public int entities_interval_ticks;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(100)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh tile entity metrics")
+        public int tileentities_interval_ticks;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(40)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh chunk metrics")
+        public int chunks_interval_ticks;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(40)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh player metrics")
+        public int players_interval_ticks;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(600)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh player statistics metrics")
+        public int player_statistics_interval_ticks;
+
+        @Config.RangeInt(min = 1, max = 72000)
+        @Config.DefaultInt(600)
+        @Config.Comment("How often (in server ticks; 20 = 1 second) to refresh ServerUtilities team metrics")
+        public int teams_interval_ticks;
+
         @Config.RangeInt(min = 0, max = 4)
         @Config.DefaultInt(4)
         @Config.Comment("What permission level should be required to restart the exporter")

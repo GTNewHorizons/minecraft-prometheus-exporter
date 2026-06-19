@@ -19,8 +19,8 @@ import serverutils.lib.data.Universe;
 
 public class Teams extends BaseCollector {
 
-    public Teams(MinecraftServer mc_server) {
-        super(mc_server);
+    public Teams(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "teams", intervalTicks);
     }
 
     private static GaugeMetricFamily newClaimsMetric() {
@@ -45,7 +45,7 @@ public class Teams extends BaseCollector {
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily claimsMetric = newClaimsMetric();
         GaugeMetricFamily loadsMetric = newLoadsMetric();
         GaugeMetricFamily playersMetric = newPlayersMetric();
@@ -97,13 +97,5 @@ public class Teams extends BaseCollector {
         }
 
         return Arrays.asList(claimsMetric, loadsMetric, playersMetric);
-    }
-
-    static final List<MetricFamilySamples> desc = Arrays
-        .asList(newClaimsMetric(), newLoadsMetric(), newPlayersMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 }

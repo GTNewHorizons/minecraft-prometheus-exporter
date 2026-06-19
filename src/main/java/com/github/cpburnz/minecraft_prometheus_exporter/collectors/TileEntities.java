@@ -1,7 +1,6 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,8 +16,8 @@ import io.prometheus.client.GaugeMetricFamily;
 
 public class TileEntities extends BaseCollector {
 
-    public TileEntities(MinecraftServer mc_server) {
-        super(mc_server);
+    public TileEntities(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "tileentities", intervalTicks);
     }
 
     private static GaugeMetricFamily newTEMetric() {
@@ -36,7 +35,7 @@ public class TileEntities extends BaseCollector {
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         GaugeMetricFamily metric;
         if (ExporterConfig.collector.tileentities_details) {
             TObjectIntHashMap<EntityKey> te_totals = new TObjectIntHashMap<>();
@@ -75,14 +74,6 @@ public class TileEntities extends BaseCollector {
         }
 
         return Arrays.asList(metric);
-    }
-
-    static final List<MetricFamilySamples> desc = Collections
-        .singletonList(ExporterConfig.collector.tileentities_details ? newTEDetailedMetric() : newTEMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 
     private static class EntityKey {

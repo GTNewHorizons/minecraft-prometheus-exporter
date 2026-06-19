@@ -32,6 +32,31 @@ The mod configuration is located at *config/prometheus_exporter.cfg*.
 It will be automatically generated upon server start if it does not already exist.
 The default configuration can be seen in the example [examples/prometheus_exporter.cfg](examples/prometheus_exporter.cfg).
 
+### Collection model and caching
+
+Metrics that read Minecraft world state (entities, tile entities, chunks,
+players, player statistics, teams) are sampled on the **server thread** during
+the server tick and cached as an immutable snapshot. Prometheus scrapes only
+read the latest snapshot, so a scrape never races the tick loop nor blocks the
+server. The tick-timing metrics remain event-driven.
+
+Each cached collector refreshes on its own interval, configurable in ticks
+(20 ticks = 1 second). Cheap collectors refresh often; expensive ones rarely:
+
+| Option | Default (ticks) | Approx. |
+|--------|-----------------|---------|
+| `chunks_interval_ticks` | 40 | 2s |
+| `players_interval_ticks` | 40 | 2s |
+| `entities_interval_ticks` | 100 | 5s |
+| `tileentities_interval_ticks` | 100 | 5s |
+| `player_statistics_interval_ticks` | 600 | 30s |
+| `teams_interval_ticks` | 600 | 30s |
+
+Set an interval near or above your Prometheus scrape interval for the heavy
+collectors. Use `mc_collector_refresh_duration_seconds` to profile cost and
+`mc_collector_staleness_seconds` to confirm freshness. Self-monitoring metrics
+can be disabled with `self_metrics = false`.
+
 
 Exporter
 --------

@@ -1,7 +1,6 @@
 package com.github.cpburnz.minecraft_prometheus_exporter.collectors;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,8 +41,8 @@ public class PlayerStatistics extends BaseCollector {
      */
     private static final int STATS_INIT = 23;
 
-    public PlayerStatistics(MinecraftServer mc_server) {
-        super(mc_server);
+    public PlayerStatistics(MinecraftServer mc_server, int intervalTicks) {
+        super(mc_server, "player_statistics", intervalTicks);
         this.players = new THashMap<>(PLAYERS_INIT);
         this.stat_names = new THashMap<>(STATS_INIT);
     }
@@ -56,7 +55,7 @@ public class PlayerStatistics extends BaseCollector {
     }
 
     @Override
-    public List<MetricFamilySamples> collect() {
+    protected List<MetricFamilySamples> sample() {
         // Cache player list and stats.
         for (EntityPlayerMP player : this.mc_server.getConfigurationManager().playerEntityList) {
             // Get player profile.
@@ -110,13 +109,6 @@ public class PlayerStatistics extends BaseCollector {
             }
         }
         return Arrays.asList(metric);
-    }
-
-    static final List<MetricFamilySamples> desc = Collections.singletonList(newMetric());
-
-    @Override
-    public List<MetricFamilySamples> describe() {
-        return desc;
     }
 
     /**

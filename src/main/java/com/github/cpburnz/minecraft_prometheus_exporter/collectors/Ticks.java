@@ -15,13 +15,19 @@ import com.gtnewhorizon.gtnhlib.eventbus.EventBusSubscriber;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.Histogram;
 
 @EventBusSubscriber
-public class Ticks extends BaseCollector {
+public class Ticks extends Collector implements Collector.Describable {
 
     public static Ticks Instance;
+
+    /**
+     * The Minecraft server, read only on the server thread (tick events).
+     */
+    private final MinecraftServer mc_server;
 
     private final Histogram server_tick_seconds;
     private final Histogram dim_tick_seconds;
@@ -58,7 +64,7 @@ public class Ticks extends BaseCollector {
     private static final double[] TICK_BUCKETS = new double[] { 0.01, 0.025, 0.05, 0.10, 0.25, 0.5, 1.0, };
 
     public Ticks(MinecraftServer mc_server) {
-        super(mc_server);
+        this.mc_server = mc_server;
         this.dims_have_ticked = ConcurrentHashMap.newKeySet(3);
         server_has_ticked = false;
 
@@ -81,9 +87,9 @@ public class Ticks extends BaseCollector {
             .help("DIM0's total ticks")
             .create();
 
-        if (Instance == null) {
-            Instance = this;
-        }
+        // Always adopt the latest instance so a restart (e.g. singleplayer world
+        // reload) rebinds the tick events to the freshly registered collector.
+        Instance = this;
     }
 
     @EventBusSubscriber.Condition
@@ -95,10 +101,6 @@ public class Ticks extends BaseCollector {
     public List<MetricFamilySamples> collect() {
         List<MetricFamilySamples> server_ticks = this.server_tick_seconds.collect();
         List<MetricFamilySamples> dim_ticks = this.dim_tick_seconds.collect();
-
-        server_total_ticks.set(
-            mc_server.getEntityWorld()
-                .getTotalWorldTime());
 
         ArrayList<MetricFamilySamples> metrics = new ArrayList<>(
             +server_ticks.size() + dim_ticks.size() + 1 /* raw tick time */
@@ -222,6 +224,11 @@ public class Ticks extends BaseCollector {
         server_tick_timer.observeDuration();
         this.server_tick_timer = null;
         server_has_ticked = false;
+
+        // Read the world time on the server thread (END phase), where it is safe.
+        this.server_total_ticks.set(
+            this.mc_server.getEntityWorld()
+                .getTotalWorldTime());
     }
 
     @SubscribeEvent
